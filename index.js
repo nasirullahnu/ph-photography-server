@@ -29,6 +29,14 @@ async function run(){
                 res.send({survices, serviceHome})
             })
 
+            // post service to database 
+            app.post('/services', async (req, res)=> {
+                const services = req.body 
+                console.log(services)
+                
+            })
+
+
             // get specific data using service id 
             app.get('/details/:id', async (req, res)=>{
                 const id = req.params.id
@@ -36,6 +44,7 @@ async function run(){
                 const service = await serviceCollection.findOne(query);
                 res.send(service);
             })
+
 
             // add user reviews to database collection 
             app.post('/reviews', async (req, res)=> {
@@ -55,6 +64,23 @@ async function run(){
                     }
                 }
     
+                const cursor = reviewCollection.find(query)
+                const review = await cursor.toArray()
+                res.send(review);
+            })
+
+            
+            // specific service review get from database 
+            app.get('/reviews', async (req, res) => {
+
+                console.log(req.query._id);
+                let query = {}
+    
+                if(req.query._id){
+                    query = {
+                        serviceId : req.query._id
+                    }
+                }
                 const cursor = reviewCollection.find(query)
                 const review = await cursor.toArray()
                 console.log(review)
