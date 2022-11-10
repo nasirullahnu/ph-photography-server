@@ -37,7 +37,6 @@ async function run(){
                 res.send(result)
             })
 
-
             // get specific data using service id 
             app.get('/details/:id', async (req, res)=>{
                 const id = req.params.id
@@ -86,6 +85,14 @@ async function run(){
                 const review = await cursor.toArray()
                 console.log(review)
                 res.send(review);
+            })
+
+            // delete review api 
+            app.delete('/reviews/:id', async (req, res) => {
+                const id = req.params.id;
+                const query = {_id : ObjectId(id)}
+                const result = await reviewCollection.deleteOne(query)
+                res.send(result)
             })
         }
         finally{
