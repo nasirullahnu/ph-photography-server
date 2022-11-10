@@ -45,7 +45,6 @@ async function run(){
                 res.send(service);
             })
 
-
             // add user reviews to database collection 
             app.post('/reviews', async (req, res)=> {
                 const review = req.body 
@@ -57,18 +56,15 @@ async function run(){
             // load my review by user email id from database 
             app.get('/reviews', async (req, res) => {
                 let query = {}
-    
                 if(req.query.email){
                     query = {
                         email : req.query.email
                     }
                 }
-    
                 const cursor = reviewCollection.find(query)
                 const review = await cursor.toArray()
                 res.send(review);
             })
-
             
             // specific service review get from database 
             app.get('/reviews', async (req, res) => {
@@ -100,7 +96,6 @@ async function run(){
         }
 }
 run().catch(error => console.error(error))
-
 
 
 app.get('/', (req, res)=> {
